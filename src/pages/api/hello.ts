@@ -4,29 +4,29 @@ import { serialize } from "cookie";
 import { NextResponse } from "next/server";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.setHeader("Set-Cookie", serialize("name", "John Doe"));
-  res.appendHeader("Set-Cookie", serialize("age", "30"));
-  // res.status(200).json({ name: "John Doe" });
+  // res.setHeader("Set-Cookie", serialize("name", "John Doe"));
+  // res.appendHeader("Set-Cookie", serialize("age", "30"));
+  // // res.status(200).json({ name: "John Doe" });
 
-  const stateCookie = serialize("state", "1234", {
-    httpOnly: true,
-    maxAge: 60 * 60,
-    path: "/",
-    sameSite: "lax",
-    secure: true,
-  });
+  // const stateCookie = serialize("state", "1234", {
+  //   httpOnly: true,
+  //   maxAge: 60 * 60,
+  //   path: "/",
+  //   sameSite: "lax",
+  //   secure: true,
+  // });
 
-  const codeCookie = serialize("code", "5824", {
-    httpOnly: true,
-    maxAge: 60 * 60,
-    path: "/",
-    sameSite: "lax",
-    secure: true,
-  });
+  // const codeCookie = serialize("code", "5824", {
+  //   httpOnly: true,
+  //   maxAge: 60 * 60,
+  //   path: "/",
+  //   sameSite: "lax",
+  //   secure: true,
+  // });
 
-  const response = NextResponse.next();
+  let response = NextResponse.next();
 
-  response.cookies.set("state", "1234", {
+  response.cookies.set("state", "12134", {
     httpOnly: true,
     maxAge: 60 * 60,
     path: "/",
@@ -41,6 +41,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     sameSite: "lax",
     secure: true,
   });
+
+  return response;
 
   // res.setHeader("Set-Cookie", [stateCookie, codeCookie]);
 
