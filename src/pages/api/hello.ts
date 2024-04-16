@@ -7,6 +7,24 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.appendHeader("Set-Cookie", serialize("age", "30"));
   // res.status(200).json({ name: "John Doe" });
 
+  const stateCookie = serialize("state", "1234", {
+    httpOnly: true,
+    maxAge: 60 * 60,
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+  });
+
+  const codeCookie = serialize("code", "5824", {
+    httpOnly: true,
+    maxAge: 60 * 60,
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+  });
+
+  res.setHeader("Set-Cookie", [stateCookie, codeCookie]);
+
   res.setHeader("Location", "/");
   res.status(302).end();
 }
