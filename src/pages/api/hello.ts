@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
+import { NextResponse } from "next/server";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader("Set-Cookie", serialize("name", "John Doe"));
@@ -23,8 +24,26 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     secure: true,
   });
 
-  res.setHeader("Set-Cookie", [stateCookie, codeCookie]);
+  const response = NextResponse.next();
 
-  res.setHeader("Location", "/");
-  res.status(302).end();
+  response.cookies.set("state", "1234", {
+    httpOnly: true,
+    maxAge: 60 * 60,
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+  });
+
+  response.cookies.set("code", "5824", {
+    httpOnly: true,
+    maxAge: 60 * 60,
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+  });
+
+  // res.setHeader("Set-Cookie", [stateCookie, codeCookie]);
+
+  // res.setHeader("Location", "/");
+  res.status(200).end();
 }
