@@ -42,6 +42,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     secure: true,
   });
 
+  response.cookies.set("bean", "rice");
+
   return response;
 
   // res.setHeader("Set-Cookie", [stateCookie, codeCookie]);
